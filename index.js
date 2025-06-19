@@ -3,32 +3,31 @@ const puppeteer = require("puppeteer");
 const cors = require("cors");
 
 const app = express();
-const port = process.env.PORT || 10000;
-
 app.use(cors());
 
-app.get("/scrape", async (req, res) => {
+app.get("/", async (req, res) => {
   const targetUrl = req.query.url;
-  if (!targetUrl) return res.status(400).send("Missing URL");
+  if (!targetUrl) {
+    return res.status(400).send("Missing 'url' query parameter");
+  }
 
   try {
     const browser = await puppeteer.launch({
       headless: "new",
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      args: ["--no-sandbox", "--disable-setuid-sandbox"]
     });
-    const page = await browser.newPage();
-    await page.goto(targetUrl, { waitUntil: "networkidle2" });
 
-    const content = await page.content();
+    const page = await browser.newPage();
+    await page.goto(targetUrl, { waitUntil: "networkidle2", timeout: 30000 });
+    const html = await page.content();
     await browser.close();
 
-    res.send(content);
+    res.send(html);
   } catch (err) {
     console.error(err);
-    res.status(500).send("Помилка при обробці сторінки");
+    res.status(500).send("Failed to fetch page");
   }
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
