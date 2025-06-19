@@ -8,7 +8,6 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^5.1.0",
-    "puppeteer": "^24.10.2",
-    "chromium-bidi": "^6.0.0"
+    "puppeteer": "^21.4.1"
   }
 }
