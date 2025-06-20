@@ -1,8 +1,8 @@
 const express = require('express');
-const puppeteer = require('puppeteer'); // npm install puppeteer
+const puppeteer = require('puppeteer');
 
 const app = express();
-const PORT = process.env.PORT || 3000; // Render надає змінну оточення PORT
+const PORT = process.env.PORT || 3000;
 
 app.get('/get_html', async (req, res) => {
     const url = req.query.url;
@@ -13,22 +13,42 @@ app.get('/get_html', async (req, res) => {
 
     let browser;
     try {
-        // Запускаємо Puppeteer у безголовому режимі
-        // 'args': ['--no-sandbox'] - важливо для роботи на Render
         browser = await puppeteer.launch({
+            // Додайте наступні параметри:
+            executablePath: puppeteer.executablePath(), // Puppeteer сам знайде встановлений Chromium
             headless: true,
-            args: ['--no-sandbox', '--disable-setuid-sandbox'],
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-dev-shm-usage', // Важливо для обмежених середовищ, як Render
+                '--disable-accelerated-video-decode',
+                '--disable-gpu',
+                '--disable-background-networking',
+                '--disable-default-apps',
+                '--disable-extensions',
+                '--disable-sync',
+                '--disable-translate',
+                '--hide-scrollbars',
+                '--metrics-recording-only',
+                '--mute-audio',
+                '--no-first-run',
+                '--no-default-browser-check',
+                '--no-initial-navigation',
+                '--noerrdialogs',
+                '--single-process' // Може допомогти в деяких середовищах
+            ],
         });
         const page = await browser.newPage();
 
-        // Переходимо на сторінку
-        await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 }); // Збільшення таймауту
+        // Встановіть User-Agent, щоб сайт не міг легко виявити Puppeteer
+        await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36');
 
-        // Зачекайте деякий час, якщо Cloudflare має додаткові перевірки
-        // Це може бути корисно, але не завжди необхідно.
-        // await page.waitForTimeout(5000); // 5 секунд очікування
+        await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });
 
-        // Отримуємо повний HTML-вміст сторінки
+        // Можливо, потрібно буде додати невелику затримку або очікування певного елемента
+        // для сайтів, які мають складні перевірки Cloudflare або динамічний контент.
+        // await new Promise(resolve => setTimeout(resolve, 3000)); // Зачекати 3 секунди
+
         const html = await page.content();
 
         res.json({ html: html });
