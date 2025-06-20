@@ -8,26 +8,29 @@ app.use(cors());
 app.get("/", async (req, res) => {
   const targetUrl = req.query.url;
   if (!targetUrl) {
-    return res.status(400).send("Missing 'url' query parameter");
+    return res.status(400).send("Missing 'url' parameter");
   }
 
   try {
     const browser = await puppeteer.launch({
-      headless: "new",
-      args: ["--no-sandbox", "--disable-setuid-sandbox"]
+      headless: true,
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      executablePath: '/opt/render/.cache/puppeteer/chrome/linux-137.0.7151.119/chrome-linux64/chrome'
     });
 
     const page = await browser.newPage();
     await page.goto(targetUrl, { waitUntil: "networkidle2", timeout: 30000 });
-    const html = await page.content();
+    const content = await page.content();
     await browser.close();
 
-    res.send(html);
+    res.send(content);
   } catch (err) {
     console.error(err);
-    res.status(500).send("Failed to fetch page");
+    res.status(500).send("Error: " + err.message);
   }
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Proxy server running on port ${port}`);
+});
