@@ -5,12 +5,12 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "postinstall": "puppeteer browsers install chromium" // Додайте цей рядок
+    "postinstall": "puppeteer browsers install chromium"
   },
   "dependencies": {
     "express": "^4.19.2",
     "puppeteer": "^22.12.1",
-    "@puppeteer/browsers": "^2.2.0" // Додайте цю залежність
+    "@puppeteer/browsers": "^2.2.0"
   },
   "engines": {
     "node": "20.x"
