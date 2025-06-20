@@ -14,27 +14,12 @@ app.get('/get_html', async (req, res) => {
     let browser;
     try {
         browser = await puppeteer.launch({
-            // executablePath: puppeteer.executablePath(), // ВИДАЛІТЬ АБО ЗАКОМЕНТУЙТЕ ЦЕЙ РЯДОК
             headless: true,
             args: [
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
-                '--disable-dev-shm-usage', // Важливо для обмежених середовищ, як Render
-                '--disable-accelerated-video-decode',
-                '--disable-gpu',
-                '--disable-background-networking',
-                '--disable-default-apps',
-                '--disable-extensions',
-                '--disable-sync',
-                '--disable-translate',
-                '--hide-scrollbars',
-                '--metrics-recording-only',
-                '--mute-audio',
-                '--no-first-run',
-                '--no-default-browser-check',
-                '--no-initial-navigation',
-                '--noerrdialogs',
-                '--single-process' // Може допомогти в деяких середовищах
+                '--disable-dev-shm-usage',
+                // ...інші аргументи...
             ],
         });
         const page = await browser.newPage();
