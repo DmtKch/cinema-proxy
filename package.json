@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "postinstall": "puppeteer browsers install chromium"
+    "postinstall": "puppeteer browsers install chromium@latest"
   },
   "dependencies": {
     "express": "^4.19.2",
