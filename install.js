@@ -1,8 +1,9 @@
-const { install } = require('puppeteer');
+const puppeteer = require('puppeteer');
 
-install()
-  .then(() => console.log('Chromium installed successfully'))
-  .catch(err => {
-    console.error('Failed to install Chromium:', err);
+puppeteer
+  .install()
+  .then(() => console.log('✅ Chromium installed'))
+  .catch((err) => {
+    console.error('❌ Error installing Chromium:', err);
     process.exit(1);
   });
