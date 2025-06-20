@@ -14,23 +14,22 @@ app.get("/", async (req, res) => {
   try {
     const browser = await puppeteer.launch({
       headless: true,
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
-      executablePath: '/opt/render/.cache/puppeteer/chrome/linux-137.0.7151.119/chrome-linux64/chrome'
+      args: ["--no-sandbox", "--disable-setuid-sandbox"]
     });
 
     const page = await browser.newPage();
     await page.goto(targetUrl, { waitUntil: "networkidle2", timeout: 30000 });
-    const content = await page.content();
+    const html = await page.content();
     await browser.close();
 
-    res.send(content);
+    res.send(html);
   } catch (err) {
-    console.error(err);
+    console.error("Error:", err);
     res.status(500).send("Error: " + err.message);
   }
 });
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-  console.log(`Proxy server running on port ${port}`);
+  console.log(`Proxy server is running on port ${port}`);
 });
