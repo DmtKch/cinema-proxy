@@ -1,20 +1,16 @@
 {
-  "name": "puppeteer-proxy",
+  "name": "cinema-proxy",
   "version": "1.0.0",
+  "description": "Proxy service to fetch HTML with Cloudflare bypass",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
   "dependencies": {
-  "cors": "^2.8.5",
-  "express": "^4.18.2",
-  "puppeteer": "22.0.0"
-},
-"scripts": {
-  "install": "node install.js",
-  "start": "node index.js"
-},
+    "express": "^4.19.2",
+    "puppeteer": "^22.12.1"
+  },
   "engines": {
-    "node": "18.x"
+    "node": "20.x" // Або інша сумісна версія Node.js
   }
 }
