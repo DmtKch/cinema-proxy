@@ -1,9 +1,8 @@
-const puppeteer = require('puppeteer');
+const { downloadBrowser } = require('puppeteer/lib/cjs/puppeteer/node/install.js');
 
-puppeteer
-  .install()
-  .then(() => console.log('✅ Chromium installed'))
-  .catch((err) => {
-    console.error('❌ Error installing Chromium:', err);
+downloadBrowser()
+  .then(() => console.log('✅ Chromium downloaded successfully'))
+  .catch(err => {
+    console.error('❌ Failed to download Chromium:', err);
     process.exit(1);
   });
