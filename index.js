@@ -14,8 +14,7 @@ app.get('/get_html', async (req, res) => {
     let browser;
     try {
         browser = await puppeteer.launch({
-            // Додайте наступні параметри:
-            executablePath: puppeteer.executablePath(), // Puppeteer сам знайде встановлений Chromium
+            // executablePath: puppeteer.executablePath(), // ВИДАЛІТЬ АБО ЗАКОМЕНТУЙТЕ ЦЕЙ РЯДОК
             headless: true,
             args: [
                 '--no-sandbox',
