@@ -1,16 +1,14 @@
 {
   "name": "cinema-proxy",
   "version": "1.0.0",
-  "description": "Proxy service to fetch HTML with Cloudflare bypass",
+  "description": "Web service for uakino",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "postinstall": "puppeteer browsers install chromium@latest"
+    "start": "node index.js"
   },
   "dependencies": {
     "express": "^4.19.2",
-    "puppeteer": "^22.12.1",
-    "@puppeteer/browsers": "^2.2.0"
+    "puppeteer": "^22.12.1"
   },
   "engines": {
     "node": "20.x"
