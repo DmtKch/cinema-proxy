@@ -8,8 +8,8 @@
   },
   "dependencies": {
     "express": "^4.19.2",
-    "puppeteer-core": "^22.12.1", // Оновіть до актуальної версії
-    "@sparticuz/chromium": "^123.0.0" // Оновіть до актуальної версії
+    "puppeteer-core": "^22.12.1",
+    "@sparticuz/chromium": "^123.0.0"
   },
   "engines": {
     "node": "20.x"
