@@ -14,11 +14,9 @@ app.get('/scrape', async (req, res) => {
     let browser;
     try {
         browser = await puppeteer.launch({
-            args: [...chromium.args, '--hide-scrollbars', '--disable-web-security'], // Обов'язкові аргументи для Chromium на Render
+            args: chromium.args.concat(['--hide-scrollbars', '--disable-web-security']), // Обов'язкові аргументи для Chromium на Render
             defaultViewport: chromium.defaultViewport,
-            executablePath: await chromium.executablePath(
-                `https://github.com/Sparticuz/chromium/releases/download/v${chromium.build}/chromium-v${chromium.build}-pack.tar`
-            ), // Шлях до виконуваного файлу Chromium
+            executablePath: await chromium.executablePath(), // Шлях до виконуваного файлу Chromium
             headless: chromium.headless,
             ignoreHTTPSErrors: true,
         });
