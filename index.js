@@ -27,7 +27,7 @@ app.get('/get_html', async (req, res) => {
         // Встановіть User-Agent, щоб сайт не міг легко виявити Puppeteer
         await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36');
 
-        await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });
+        await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 });
 
         // Можливо, потрібно буде додати невелику затримку або очікування певного елемента
         // для сайтів, які мають складні перевірки Cloudflare або динамічний контент.
